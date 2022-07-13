@@ -49,19 +49,18 @@ func procesarVerify(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("[%s] inicio", thread)
-	go func() {
+	for emailThread[email] {
+		log.Printf("[%s] esperar", thread)
+		time.Sleep(10 * time.Microsecond)
+	}
 
-		for emailThread[email] {
-			log.Printf("[%s] esperar", thread)
-			time.Sleep(10 * time.Microsecond)
-		}
+	addEmailRequest(email)
 
-		defer func() {
-			removeEmail(email)
-		}()
-
-		processImage(email, thread)
+	defer func() {
+		removeEmail(email)
 	}()
+
+	processImage(email, thread)
 
 	w.WriteHeader(http.StatusAccepted)
 	w.Write([]byte("email: " + email))
