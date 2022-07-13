@@ -34,8 +34,8 @@ func addEmailRequest(email string) bool {
 	return exists
 }
 
-func removeEmail(email string) {
-	log.Printf("[%s] Remover", email)
+func removeEmail(email string, thread string) {
+	log.Printf("[%s] Remover", thread)
 	delete(emailThread, email)
 }
 
@@ -50,14 +50,14 @@ func procesarVerify(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("[%s] inicio", thread)
 	for emailThread[email] {
-		log.Printf("[%s] esperar", thread)
+		// log.Printf("[%s] esperar", thread)
 		time.Sleep(10 * time.Microsecond)
 	}
 
 	addEmailRequest(email)
 
 	defer func() {
-		removeEmail(email)
+		removeEmail(email, thread)
 	}()
 
 	processImage(email, thread)
@@ -68,7 +68,7 @@ func procesarVerify(w http.ResponseWriter, r *http.Request) {
 }
 
 func processImage(email string, thread string) {
-	log.Printf("[%s] Validar", thread)
+	//log.Printf("[%s] Validar", thread)
 	time.Sleep(3 * time.Second)
-	log.Printf("[%s] Validado", thread)
+	//log.Printf("[%s] Validado", thread)
 }
