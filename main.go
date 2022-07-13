@@ -60,7 +60,7 @@ func procesarVerify(w http.ResponseWriter, r *http.Request) {
 			removeEmail(email)
 		}()
 
-		processImage(email)
+		processImage(email, thread)
 	}()
 
 	w.WriteHeader(http.StatusAccepted)
@@ -68,8 +68,8 @@ func procesarVerify(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func processImage(email string) {
-	log.Printf("[%s] Validar", email)
+func processImage(email string, thread string) {
+	log.Printf("[%s] Validar", thread)
 	time.Sleep(3 * time.Second)
-	log.Printf("[%s] Validado", email)
+	log.Printf("[%s] Validado", thread)
 }
